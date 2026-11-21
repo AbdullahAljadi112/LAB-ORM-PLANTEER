@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from plants.models import Plant
 
-# Create your views here.
+
+def home(request):
+    plants = Plant.objects.all()[:3]
+
+    context = {
+        'plants': plants
+    }
+
+    return render(request, 'main/home.html', context)
