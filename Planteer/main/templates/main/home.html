@@ -11,8 +11,14 @@
         <h1>Planteer</h1>
         <h2>Plant Database For Plants Lovers</h2>
 
-        <form action="/plants/search/" method="GET" class="hero-search">
-            <input type="text" name="q" placeholder="Search For Plant...">
+        <!-- Search using Django ORM -->
+        <form action="{% url 'search_plants' %}" method="GET" class="hero-search">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search For Plant..."
+                required
+            >
             <button type="submit" class="btn">Search</button>
         </form>
     </div>
@@ -25,12 +31,12 @@
             <p>Learn more about plants</p>
         </div>
 
-        <a href="/plants/all/">More →</a>
+        <a href="{% url 'all_plants' %}">More →</a>
     </div>
 
     <div class="plants-grid">
         {% for plant in plants %}
-        <a href="/plants/{{ plant.id }}/detail/" class="plant-card">
+        <a href="{% url 'plant_detail' plant.id %}" class="plant-card">
             <img src="{{ plant.image.url }}" alt="{{ plant.name }}">
             <h3>{{ plant.name }}</h3>
             <p>{{ plant.about|truncatewords:8 }}</p>
