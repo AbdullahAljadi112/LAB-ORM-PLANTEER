@@ -1,6 +1,7 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Plant
+from .forms import PlantForm
 
 
 def all_plants(request):
@@ -23,3 +24,16 @@ def all_plants(request):
     }
 
     return render(request, 'plants/all_plants.html', context)
+
+
+def add_plant(request):
+    if request.method == 'POST':
+        form = PlantForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('all_plants')
+    else:
+        form = PlantForm()
+
+    return render(request, 'plants/add_plant.html', {'form': form})
